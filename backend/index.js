@@ -20,8 +20,7 @@ import 'babel-polyfill'
 import express from 'express'
 import * as fs from 'fs'
 import bodyParser from 'body-parser'
-
-import leaderboard from './leaderboard'
+import kojiLeaderboardApi from 'koji-leaderboard-api'
 
 const app = express()
 
@@ -114,7 +113,7 @@ Object.keys(backendConfig).forEach((routeName) => {
 })
 
 // routes
-leaderboard(app)
+kojiLeaderboardApi(app)
 
 app.listen(process.env.PORT || 3333, null, async err => {
     if (err) {
