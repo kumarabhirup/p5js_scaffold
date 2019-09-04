@@ -6,6 +6,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Koji from 'koji-tools'
+// import { SaveToLeaderboard } from 'koji-react-leaderboard'
 
 class SetScore extends Component {
   static propTypes = {
@@ -46,7 +47,7 @@ class SetScore extends Component {
         },
       }
 
-      fetch(`${Koji.config.serviceMap.backend}/leaderboard/save`, {
+      fetch(`${Koji.config.serviceMap.backend}/leaderboard`, {
         method: 'post',
         headers: {
           'Content-Type': 'application/json',

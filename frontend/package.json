@@ -12,6 +12,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "koji-react-leaderboard": "0.0.4",
     "koji-tools": "^0.5.3",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
