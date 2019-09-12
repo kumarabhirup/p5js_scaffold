@@ -75,7 +75,8 @@ let objSize // Base size modifier of all objects, calculated based on screen siz
 const gameSize = 18
 
 // Mobile
-let isMobile = false
+let isMobile = false // check if it really is mobile
+let isMobileSize = false // check if the browser is mobile size
 let touching = false // Whether the user is currently touching/clicking
 
 // Load assets
@@ -152,6 +153,7 @@ function setup() {
   )
 
   isMobile = detectMobile()
+  isMobileSize = detectMobileSize()
 
   textFont(myFont) // set our font
   document.body.style.fontFamily = myFont
@@ -223,7 +225,9 @@ function windowResized() {
 
   soundButton.size = createVector(objSize, objSize)
 
-  // handleResize()
+  isMobileSize = detectMobileSize()
+
+  // handleResize() // 👈 create this function for advanced resize handling
 }
 
 /**

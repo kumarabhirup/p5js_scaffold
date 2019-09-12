@@ -159,3 +159,8 @@ function detectMobile() {
 
   return check
 }
+
+// Returns true if the user is on small sized browser
+function detectMobileSize() {
+  return width < 550
+}
