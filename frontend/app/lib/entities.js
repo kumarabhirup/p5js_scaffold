@@ -48,12 +48,68 @@ class Entity {
  * @param {String} txt
  * @param {String} color - hex code
  * @param {Number} size
+ * @param {Number} duration - How long the text will stay
  */
-function FloatingText(x, y, txt, color, size) {
+function FloatingText(x, y, txt, color, size, duration = 0.85) {
   this.pos = createVector(x, y)
   this.size = 1
   this.maxSize = size
-  this.timer = 1
+  this.timer = duration
+  this.text = txt
+  this.color = color
+
+  this.maxVelocityY = -objSize * 0.075
+  this.velocityY = objSize * 0.3
+  this.alpha = 1
+  this.animTimer = 0
+
+  this.update = function() {
+    this.animTimer += 1 / frameRate()
+
+    // Get dat size bounce effects
+    this.size = Ease(
+      EasingFunctions.easeOutElastic,
+      this.animTimer,
+      1,
+      this.maxSize,
+      1 / 0.65
+    )
+
+    if (this.timer < 0.3) {
+      this.alpha = Smooth(this.alpha, 0, 4)
+    }
+
+    this.velocityY = Smooth(this.velocityY, this.maxVelocityY, 4)
+    this.pos.y += this.velocityY
+
+    this.timer -= 1 / frameRate()
+  }
+
+  this.render = function() {
+    push()
+    textSize(this.size)
+
+    fill(
+      `rgba(
+        ${red(this.color)},
+        ${green(this.color)},
+        ${blue(this.color)},
+        ${this.alpha}
+      )`
+    )
+
+    textAlign(CENTER, TOP)
+    text(this.text, this.pos.x, this.pos.y)
+    pop()
+  }
+}
+
+// Same FloatingText class, but with no animation effect
+function OldFloatingText(x, y, txt, color, size, timer = 1) {
+  this.pos = createVector(x, y)
+  this.size = 1
+  this.maxSize = size
+  this.timer = timer
   this.txt = txt
   this.color = color
 
@@ -62,7 +118,7 @@ function FloatingText(x, y, txt, color, size) {
       this.size = Smooth(this.size, this.maxSize, 2)
     }
 
-    this.timer -= 1 / frameRate()
+    this.timer -= 0.8 / frameRate()
   }
 
   this.render = function() {
@@ -70,5 +126,39 @@ function FloatingText(x, y, txt, color, size) {
     fill(this.color)
     textAlign(CENTER, BOTTOM)
     text(this.txt, this.pos.x, this.pos.y)
+  }
+}
+
+/**
+ * @class Particle
+ * Used to show the Paritcles effect
+ * @example particles.push(new Particle(...));
+ *
+ * @param {Number} x
+ * @param {Number} y
+ * @param {p5 Loaded Image} image
+ */
+class Particle extends Entity {
+  constructor(x, y, image) {
+    super(x, y)
+    this.acceleration = random(objSize * 0.006, objSize * 0.009)
+    this.velocity = createVector(
+      random(-objSize * 0.1, objSize * 0.1),
+      random(-objSize * 0.2, objSize * 0.08)
+    )
+    this.img = image
+    this.sizeMod = random(0.8, 1.3)
+    this.rotSpeed = random(-objSize * 0.01, objSize * 0.01)
+  }
+
+  update() {
+    this.velocity.y += this.acceleration
+    this.sizeMod = Smooth(this.sizeMod, 0, 30)
+    this.pos.add(this.velocity)
+    this.rotation += this.rotSpeed
+
+    if (this.pos.y > height + objSize * 2 || this.sizeMod < 0.1) {
+      this.removable = true
+    }
   }
 }

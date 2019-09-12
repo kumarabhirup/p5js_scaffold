@@ -3,15 +3,23 @@
 /* eslint-disable no-undef */
 /* eslint-disable prefer-const */
 
+// Strict Stuffs (EDITING THESE WILL MAKE GAME CRASH)
 let myFont // The font we'll use throughout the app
 
 let gameOver = false // If it's true the game will render the main menu
 let gameBeginning = true // Should be true only before the user starts the game for the first time
-const canEnd = false
 
+let gameStart = false // Becomes true after a moment when game initializes
+
+let canEnd = false
+
+// Effects
 let floatingTexts = []
+let particles = []
 
-// Game Objects
+// Game Objects (READ-ONLY)
+
+// Game Stuffs (READ-N-WRITE)
 
 // Buttons
 let playButton
@@ -22,9 +30,12 @@ let endButton
 // Score data
 let startingLives
 let scoreGain
+let highscoreGained
+let highScore
 let score = 0
 
 // Data taken from Game Settings
+let comboTexts = []
 
 // Images
 let imgLife
@@ -35,12 +46,23 @@ let sndMusic
 let sndTap
 let sndMatch
 let sndEnd
+let sndEnemyHit
+let sndExplosion
+let sndLostLife
 
 let soundEnabled = true
 let canMute = true
 
 let soundImage
 let muteImage
+
+// Timer
+let startingGameTimer
+let gameTimer
+let gameTimerEnabled = false
+let gameOverRectangleHeight = 0 // for game over animation
+
+let canScore = false
 
 // Size stuff
 let objSize // Base size modifier of all objects, calculated based on screen size
@@ -85,12 +107,31 @@ function preload() {
   if (Koji.config.sounds.tap) sndTap = loadSound(Koji.config.sounds.tap)
   if (Koji.config.sounds.match) sndMatch = loadSound(Koji.config.sounds.match)
   if (Koji.config.sounds.end) sndEnd = loadSound(Koji.config.sounds.end)
+  if (Koji.config.sounds.enemyHit)
+    sndEnemyHit = loadSound(Koji.config.sounds.enemyHit)
+  if (Koji.config.sounds.explosion)
+    sndExplosion = loadSound(Koji.config.sounds.explosion)
+  if (Koji.config.sounds.life) sndLostLife = loadSound(Koji.config.sounds.life)
 
   // Load settings from Game Settings
   scoreGain = parseInt(Koji.config.strings.scoreGain)
   startingLives = parseInt(Koji.config.strings.lives)
+  comboTexts = Koji.config.strings.comboText.split(',')
+  startingGameTimer = parseInt(Koji.config.strings.gameTimer)
   lives = startingLives
+
+  // Timer stuff
+  if (startingGameTimer <= 0) {
+    gameTimer = 99999
+    gameTimerEnabled = false
+  } else {
+    gameTimer = startingGameTimer
+    gameTimerEnabled = true
+  }
 }
+
+// Instantiate objects here
+function instantiate() {}
 
 // Setup your props
 function setup() {
@@ -121,6 +162,8 @@ function setup() {
   leaderboardButton = new LeaderboardButton()
   endButton = new EndButton()
 
+  instantiate()
+
   gameBeginning = true
 
   /**
@@ -128,7 +171,9 @@ function setup() {
    * This way the game will load faster
    */
   if (Koji.config.sounds.backgroundMusic)
-    sndMusic = loadSound(Koji.config.sounds.backgroundMusic, playMusic)
+    sndMusic = loadSound(Koji.config.sounds.backgroundMusic, () =>
+      playMusic(sndMusic, 0.4, false)
+    )
 }
 
 // An infinite loop that never ends in p5
@@ -180,6 +225,10 @@ function loseLife() {
   if (lives <= 0) {
     gameOver = true
     checkHighscore()
+
+    if (score > parseInt(Koji.config.strings.minimumScoreToSave)) {
+      submitScore(score)
+    }
   }
 }
 
@@ -196,6 +245,14 @@ function touchStarted() {
   if (!gameOver && !gameBeginning) {
     // InGame
     touching = true
+
+    if (canEnd) {
+      gameOver = true
+
+      if (score > parseInt(Koji.config.strings.minimumScoreToSave)) {
+        submitScore(score)
+      }
+    }
   }
 }
 
@@ -232,5 +289,32 @@ function init() {
   highscoreGained = false
   score = 0
 
+  gameTimer = startingGameTimer
+  gameOverRectangleHeight = 0
+
   floatingTexts = []
+  particles = []
+
+  // Keep everyone at their original place
+  instantiate()
+
+  floatingTexts.push(
+    new OldFloatingText(
+      width / 2,
+      height / 2 - height * 0.01,
+      Koji.config.strings.gameStartedFloatingText,
+      Koji.config.colors.floatingTextColor,
+      objSize * 1.2,
+      2
+    )
+  )
+
+  canScore = false
+  canEnd = false
+
+  // set score to zero if score increases mistakenly
+  setTimeout(() => {
+    score = 0
+    gameStart = true
+  }, 1000)
 }

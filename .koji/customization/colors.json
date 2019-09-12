@@ -14,7 +14,11 @@
     "playButtonClickColor": "#ffda5a",
     "buttonHoverColor": "#23bcc5",
     "buttonClickColor": "#2CECF5",
-    "lifeColor": "#d54b8c"
+    "lifeColor": "#d54b8c",
+    "floatingTextColor": "#ffff00",
+    "negativeFloatingTextColor": "#ffffff",
+    "timerText": "#ffff00",
+    "gameOverRectangleColor": "#222222"
   },
   "@@editor": [{
     "key": "colors",

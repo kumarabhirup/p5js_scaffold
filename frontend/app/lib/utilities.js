@@ -12,11 +12,81 @@ function checkHighscore() {
   }
 }
 
-function playMusic() {
-  if (sndMusic) {
-    sndMusic.setVolume(0.4)
-    sndMusic.setLoop(true)
-    sndMusic.play()
+/**
+ * Used to add score
+ * @param {Number} amount - amount of score to be added
+ * @param {p5 Image Instance} particlesImage
+ * @param {Object} particle - { x: null, y: null }
+ * @param {Number} particleCount
+ * @param {Object} settings - { floatingText: false }
+ */
+function addScore(
+  amount,
+  particlesImage,
+  particle = { x: null, y: null },
+  particleCount = floor(random(2, 15)),
+  settings = { floatingText: true }
+) {
+  score += amount
+
+  if (settings.floatingText) {
+    floatingTexts.push(
+      new FloatingText(
+        particle.x,
+        particle.y - 0.75 * objSize * 0.5,
+        amount < 0 ? `${amount} 😭` : `+${amount}`,
+        amount < 0
+          ? Koji.config.colors.negativeFloatingTextColor
+          : Koji.config.colors.floatingTextColor,
+        objSize * 2,
+        2
+      )
+    )
+  }
+
+  // Spawn particles
+  if (particle.y > 0) {
+    for (let i = 0; i < particleCount; i += 1) {
+      particles.push(
+        new Particle(particle.x, particle.y, particlesImage) // you may use `imgLife` for the image parameter if the balloon images you have aren't good particles
+      )
+    }
+  }
+}
+
+/**
+ *
+ * @param {p5 Image Instance} particlesImage
+ * @param {object} particle - { x: null, y: null }
+ * @param {*} particleCount
+ * @param {Number} particleCount
+ */
+function particlesEffect(
+  particlesImage,
+  particle = { x: null, y: null },
+  particleCount = floor(random(2, 15))
+) {
+  // Spawn particles
+  if (particle.y > 0) {
+    for (let i = 0; i < particleCount; i += 1) {
+      particles.push(
+        new Particle(particle.x, particle.y, particlesImage) // you may use `imgLife` for the image parameter if the balloon images you have aren't good particles
+      )
+    }
+  }
+}
+
+function submitScore(currentScore) {
+  window.setScore(currentScore)
+  window.setAppView('setScore')
+}
+
+// Sound stuffs
+function playMusic(music, volume = 0.4, loop = false) {
+  if (music) {
+    music.setVolume(volume)
+    music.setLoop(loop)
+    music.play()
   }
 }
 

@@ -3,10 +3,24 @@
 
 // This function runs when the Game Screen is ON
 function gamePlay() {
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < floatingTexts.length; i++) {
+  // Floating Text effects
+  for (let i = 0; i < floatingTexts.length; i += 1) {
     floatingTexts[i].update()
     floatingTexts[i].render()
+  }
+
+  // Particle effects
+  for (let i = 0; i < particles.length; i += 1) {
+    if (particles[i]) {
+      particles[i].render()
+      particles[i].update()
+    }
+  }
+
+  // Draw Timer! (Comment this blob of code if you don't want timer)
+  if (gameTimerEnabled) {
+    gameTimer -= 1 / frameRate()
+    drawTimer()
   }
 
   // InGame UI
@@ -21,9 +35,7 @@ function gamePlay() {
 
   // Lives draw
   const lifeSize = objSize
-
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < lives; i++) {
+  for (let i = 0; i < lives; i += 1) {
     image(
       imgLife,
       lifeSize / 2 + lifeSize * i,
