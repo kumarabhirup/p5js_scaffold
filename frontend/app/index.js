@@ -270,6 +270,36 @@ function touchEnded() {
 // Key pressed and released
 function keyPressed() {
   if (!gameOver && !gameBeginning) {
+    // Ignore this complete if statement. It is just for testing purposes. You don't even need to remove this code anyway.
+    if (Koji.config.strings.trialTesting) {
+      if (key === '-') {
+        loseLife()
+      }
+
+      if (keyCode === ENTER) {
+        addScore(
+          1,
+          imgLife,
+          {
+            x: random(0, width),
+            y: random(0, height),
+          },
+          10,
+          { floatingText: true }
+        )
+      }
+
+      if (key === ' ') {
+        particlesEffect(
+          imgLife,
+          {
+            x: width / 2,
+            y: height / 2,
+          },
+          10
+        )
+      }
+    }
   }
 }
 

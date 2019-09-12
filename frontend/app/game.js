@@ -18,7 +18,7 @@ function gamePlay() {
   }
 
   // Draw Timer! (Comment this blob of code if you don't want timer)
-  if (gameTimerEnabled) {
+  if (Koji.config.strings.enableTimer && gameTimerEnabled) {
     gameTimer -= 1 / frameRate()
     drawTimer()
   }

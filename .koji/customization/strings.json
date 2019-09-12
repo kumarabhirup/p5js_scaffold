@@ -11,6 +11,7 @@
     "lives": "3",
     "minimumScoreToSave": "1",
     "enableCursor": true,
+    "enableTimer": true,
     "gameTimer": "10",
     "playButtonText": "PLAY NOW",
     "leaderboardButtonText": "LEADERBOARD",
@@ -21,7 +22,8 @@
     "emailInputEnabled": false,
     "scoreText": "Score:",
     "highscoreText": "High Score:",
-    "highscoreGainedText": "New High Score!"
+    "highscoreGainedText": "New High Score!",
+    "trialTesting": false
   },
   "@@editor": [{
     "key": "strings",
@@ -86,6 +88,12 @@
         "key": "enableCursor",
         "name": "Enable Cursor",
         "description": "Do you want the game to have cursor when game starts?",
+        "type": "boolean"
+      },
+      {
+        "key": "enableTimer",
+        "name": "Enable Game Timer",
+        "description": "Disable if you don't want game to have a timer.",
         "type": "boolean"
       },
       {
