@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
-const { Bodies, World } = Matter
+const { Bodies } = Matter
 
 /**
  * @class GameObject
@@ -19,7 +19,7 @@ class GameObject {
     cordinates = { x: null, y: null }, // positioning
     sizing = { width: null, height: null, radius: null }, // if the shape is circle, provide radius, else... width and height
     settings = {
-      shape: Koji.config.strings.objectShape,
+      shape: 'rectangle',
       image: null,
       color: { r: 0, g: 255, b: 255, a: 1 },
       rotate: true,
@@ -65,7 +65,7 @@ class GameObject {
   /**
    * @description check for collision of this object to any other object
    * @returns true if the otherElement is touching this element.
-   * @param {object} otherElement  - {sizing: {x: 100, y: 100}, body: Matter-js-body}
+   * @param {object} otherElement  - {sizing: {w: 100, h: 100}, body: Matter-js-body}
    */
   didTouch(otherElement, shape = 'circle') {
     let circle
@@ -73,17 +73,21 @@ class GameObject {
     const { body } = otherElement
 
     if (this.settings.shape === 'circle' && shape === 'circle') {
-      return circleCircleColliding({
-        x: this.body.position.x,
-        y: this.body.position.y,
-        r: this.sizing.radius,
-      })
+      return circleCircleColliding(
+        {
+          x: this.body.position.x,
+          y: this.body.position.y,
+          r: this.sizing.radius,
+        },
+        {
+          x: body.position.x,
+          y: body.position.y,
+          r: otherElement.sizing.radius,
+        }
+      )
     }
 
-    if (
-      (this.settings.shape === 'circle' && shape === 'rectangle') ||
-      (this.settings.shape === 'rectangle' && shape === 'circle')
-    ) {
+    if (this.settings.shape === 'circle' && shape === 'rectangle') {
       circle = {
         x: this.body.position.x,
         y: this.body.position.y,
@@ -95,6 +99,23 @@ class GameObject {
         y: body.position.y,
         w: otherElement.sizing.width,
         h: otherElement.sizing.height,
+      }
+
+      return rectCircleColliding(circle, rectangle)
+    }
+
+    if (this.settings.shape === 'rectangle' && shape === 'circle') {
+      circle = {
+        x: body.position.x,
+        y: body.position.y,
+        r: otherElement.sizing.radius,
+      }
+
+      rectangle = {
+        x: this.body.position.x,
+        y: this.body.position.y,
+        w: this.sizing.width,
+        h: this.sizing.height,
       }
 
       return rectCircleColliding(circle, rectangle)
@@ -125,7 +146,10 @@ class GameObject {
    */
   wentOutOfFrame() {
     return (
-      this.body.position.x > width + 500 || this.body.position.y > height + 500
+      this.body.position.x > width + objSize * 3 ||
+      this.body.position.x < 0 - objSize * 3 ||
+      this.body.position.y > height + 500 ||
+      this.body.position.y < 0
     )
   }
 
@@ -135,6 +159,12 @@ class GameObject {
 
     push()
     translate(position.x, position.y)
+
+    // translate at a vector if needed
+    this.settings.translateWithVector
+      ? translate(this.settings.translateWithVector)
+      : null
+
     this.settings.rotate ? rotate(angle) : null
 
     switch (this.settings.shape) {
@@ -145,11 +175,15 @@ class GameObject {
               image(this.settings.image, 0, 0, diameter, diameter)
             })()
           : (() => {
-              fill(
-                this.settings.color.r,
-                this.settings.color.g,
-                this.settings.color.b
-              )
+              if (typeof this.settings.color === 'object') {
+                fill(
+                  this.settings.color.r,
+                  this.settings.color.g,
+                  this.settings.color.b
+                )
+              } else {
+                fill(this.settings.color)
+              }
               ellipse(0, 0, diameter, diameter)
             })()
         break
@@ -182,6 +216,11 @@ class GameObject {
     }
 
     pop()
+  }
+
+  // Rotate the object
+  rotate(degrees = 0) {
+    this.body.angle = degrees
   }
 
   // Use this for your destruction code -> eg. World.remove(world, this.body)
