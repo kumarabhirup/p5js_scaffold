@@ -20,9 +20,15 @@ function gameBeginningOver() {
 
   // Draw instructions
   const instructionsText = []
-  instructionsText[0] = Koji.config.strings.instructions1
-  instructionsText[1] = Koji.config.strings.instructions2
-  instructionsText[2] = Koji.config.strings.instructions3
+  instructionsText[0] = isMobile
+    ? Koji.config.strings.mobile_Instructions1
+    : Koji.config.strings.desktop_Instructions1
+  instructionsText[1] = isMobile
+    ? Koji.config.strings.mobile_Instructions2
+    : Koji.config.strings.desktop_Instructions2
+  instructionsText[2] = isMobile
+    ? Koji.config.strings.mobile_Instructions3
+    : Koji.config.strings.desktop_Instructions3
 
   const instructionsSize = []
 

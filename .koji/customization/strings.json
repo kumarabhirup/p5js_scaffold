@@ -2,9 +2,12 @@
   "strings": {
     "fontFamily": "https://fonts.googleapis.com/css?family=Lilita+One",
     "title": "p5js Scaffold",
-    "instructions1": "Just a scaffold",
-    "instructions2": "Thanks to @Svarog and @diddy",
-    "instructions3": "For their boilerplate code",
+    "desktop_instructions1": "Just a scaffold",
+    "desktop_instructions2": "Thanks to @Svarog and @diddy",
+    "desktop_instructions3": "For their boilerplate code",
+    "mobile_instructions1": "Just a scaffold",
+    "mobile_instructions2": "Thanks to @Svarog and @diddy",
+    "mobile_instructions3": "For their boilerplate code",
     "gameOverText": "GAME OVER",
     "highScoreText": "High Score:",
     "playButtonText": "PLAY NOW",
@@ -51,18 +54,33 @@
         "type": "text"
       },
       {
-        "key": "instructions1",
-        "name": "Game Instructions 1",
+        "key": "desktop_instructions1",
+        "name": "Desktop Game Instructions 1",
         "type": "text"
       },
       {
-        "key": "instructions2",
-        "name": "Game Instructions 2",
+        "key": "desktop_instructions2",
+        "name": "Desktop Game Instructions 2",
         "type": "text"
       },
       {
-        "key": "instructions3",
-        "name": "Game Instructions 3",
+        "key": "desktop_instructions3",
+        "name": "Desktop Game Instructions 3",
+        "type": "text"
+      },
+      {
+        "key": "mobile_instructions1",
+        "name": "Mobile Game Instructions 1",
+        "type": "text"
+      },
+      {
+        "key": "mobile_instructions2",
+        "name": "Mobile Game Instructions 2",
+        "type": "text"
+      },
+      {
+        "key": "mobile_instructions3",
+        "name": "Mobile Game Instructions 3",
         "type": "text"
       },
       {
