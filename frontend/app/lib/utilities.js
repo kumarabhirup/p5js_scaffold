@@ -76,6 +76,7 @@ function particlesEffect(
   }
 }
 
+// Used to go to submit score page
 function submitScore(currentScore) {
   window.setScore(currentScore)
   window.setAppView('setScore')
