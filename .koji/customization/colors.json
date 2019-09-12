@@ -96,13 +96,28 @@
         "type": "color"
       },
       {
-        "key": "weaponColor",
-        "name": "Weapon Text Color",
+        "key": "textColor",
+        "name": "Text Color",
         "type": "color"
       },
       {
-        "key": "enemyNumberColor",
-        "name": "Enemy Number Color",
+        "key": "floatingTextColor",
+        "name": "Floating Text Color",
+        "type": "color"
+      },
+      {
+        "key": "negativeFloatingTextColor",
+        "name": "Negative Floating Text Color",
+        "type": "color"
+      },
+      {
+        "key": "timerText",
+        "name": "Timer Text Color",
+        "type": "color"
+      },
+      {
+        "key": "gameOverRectangleColor",
+        "name": "Game Over Rectangle Background Color",
         "type": "color"
       }
     ]

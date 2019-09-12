@@ -20,7 +20,6 @@
     "comboText": "AWESOME 👏, NEAT 👌, GREAT 👏, FANTASTIC 💌, WOW ❤️, AMAZING 😍",
     "emailInputEnabled": false,
     "scoreText": "Score:",
-    "highScoreText": "High Score:",
     "highscoreText": "High Score:",
     "highscoreGainedText": "New High Score!"
   },
@@ -30,6 +29,12 @@
     "icon": "💡",
     "source": "strings.json",
     "fields": [{
+        "key": "fontFamily",
+        "name": "Font Family",
+        "description": "Google fonts link to font to use in the game",
+        "type": "text"
+      },
+      {
         "key": "title",
         "name": "Game Title",
         "description": "The title that is displayed in the start menu",
@@ -66,15 +71,27 @@
         "type": "text"
       },
       {
+        "key": "lives",
+        "name": "Starting Lives",
+        "description": "How many lives you initially have",
+        "type": "text"
+      },
+      {
         "key": "minimumScoreToSave",
         "name": "Minimum Score to Save",
         "description": "Minimum score needed for user to save his/her name in Leaderboard.",
         "type": "text"
       },
       {
-        "key": "fontFamily",
-        "name": "Font Family",
-        "description": "Google fonts link to font to use in the game",
+        "key": "enableCursor",
+        "name": "Enable Cursor",
+        "description": "Do you want the game to have cursor when game starts?",
+        "type": "boolean"
+      },
+      {
+        "key": "gameTimer",
+        "name": "Game Timer",
+        "description": "How many seconds before game should over?",
         "type": "text"
       },
       {
@@ -82,6 +99,41 @@
         "name": "Play Button Text",
         "description": "Label on the Play Button",
         "type": "text"
+      },
+      {
+        "key": "leaderboardButtonText",
+        "name": "Leaderboard Button Text",
+        "description": "Label on the Leaderboard Button",
+        "type": "text"
+      },
+      {
+        "key": "endButtonText",
+        "name": "End Button Text",
+        "description": "Label on the End Button",
+        "type": "text"
+      },
+      {
+        "key": "gameOverText",
+        "name": "Game Over Text",
+        "type": "text"
+      },
+      {
+        "key": "gameStartedFloatingText",
+        "name": "Game Started Text",
+        "description": "The floating text that appears after game starts.",
+        "type": "text"
+      },
+      {
+        "key": "comboText",
+        "name": "Success Texts",
+        "description": "Appreiciating texts that appear after some success.",
+        "type": "text"
+      },
+      {
+        "key": "emailInputEnabled",
+        "name": "Enable E-Mail Input",
+        "description": "Enable/Disable E-Mail input while submitting score.",
+        "type": "boolean"
       },
       {
         "key": "scoreText",
@@ -99,18 +151,6 @@
         "key": "highscoreGainedText",
         "name": "High Score Gained Text",
         "description": "When you get a new high score",
-        "type": "text"
-      },
-      {
-        "key": "emailInputEnabled",
-        "name": "Enable E-Mail Input",
-        "description": "Enable/Disable E-Mail input while submitting score.",
-        "type": "boolean"
-      },
-      {
-        "key": "lives",
-        "name": "Starting Lives",
-        "description": "How many lives you initially have",
         "type": "text"
       }
     ]
