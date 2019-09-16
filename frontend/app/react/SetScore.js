@@ -6,7 +6,7 @@
 import 'babel-polyfill'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import Koji from 'koji-tools'
+import Koji from '@withkoji/vcc'
 import { SaveToLeaderboard } from 'koji-react-leaderboard'
 
 class SetScore extends Component {
